@@ -62,8 +62,8 @@ def test_evolute(qt):
     iket = rand_ket(N=2)
     alpha, beta = iket[:].flatten()
     assert qt.evolute(qt.initialize(iket)) == \
-        Qobj([[alpha], [beta], [alpha], [-beta],
-              [beta], [alpha], [beta], [-alpha]],
+        Qobj([[alpha], [beta], [beta], [alpha],
+              [alpha], [-beta], [-beta], [alpha]],
              dims=[[2, 2, 2], [1, 1, 1]]).unit()
 
 
@@ -83,10 +83,10 @@ def test_measure(qt):
     None.
 
     """
-    for i in range(10):
+    for i in range(4):
         iket = rand_ket(N=2)
         mset = [qt.measure(qt.evolute(qt.initialize(iket)))
-                for i in range(100)]
+                for i in range(1000)]
         P, _ = np.histogram(mset, bins=range(5), density=True)
         entropy = - np.sum(P * np.log2(P))
         assert abs(entropy - 2) < 0.1
