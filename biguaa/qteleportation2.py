@@ -9,7 +9,6 @@ import scipy.stats
 from qutip.qip.operations import snot, cnot, rx, ry, rz
 from qutip.qobjevo import proj
 
-
 # ############ FUNCTIONS FOR ANY REPRESENTATIONS OF QUANTUM STATES ################
 
 def get_dict_form_qutip(wave_vector):
@@ -45,7 +44,7 @@ def print_dict(dictionary, precision=3):
 
 # Initialize a random 3-qubit quantum state
 def initialize(state):
-    bell = bell_state("00")
+    bell = bell_state("11")
     return tensor(state, bell).unit()
 
 # Make transformations until the projective measurements
@@ -75,7 +74,7 @@ def teleport(state, mres):
     if mres == 0:
         bra0 = bra("000")
         bra1 = bra("001")
-        state =  state
+        state = Z*X * state
     if mres == 1:
         bra0 = bra("010")
         bra1 = bra("011")
@@ -87,7 +86,7 @@ def teleport(state, mres):
     if mres == 3:
         bra0 = bra("110")
         bra1 = bra("111")
-        state = Z*X*state
+        state = state
 
     pr0 = (bra0*state).tr()
     pr1 = (bra1*state).tr()
