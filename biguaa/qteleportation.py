@@ -75,15 +75,15 @@ def teleport(state, mres):
     if mres == 0:
         bra0 = bra("000")
         bra1 = bra("001")
-        state =  state
+        state = state
     if mres == 1:
         bra0 = bra("010")
         bra1 = bra("011")
-        state = Z*state
+        state = X*state
     if mres == 2:
         bra0 = bra("100")
         bra1 = bra("101")
-        state = X*state
+        state = Z*state
     if mres == 3:
         bra0 = bra("110")
         bra1 = bra("111")
