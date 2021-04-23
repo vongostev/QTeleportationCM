@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 import numpy as np
@@ -15,11 +15,11 @@ from qutip.qip.circuit import QubitCircuit, Gate
 
 # ![image.png](attachment:image.png)
 
-# In[2]:
+# In[3]:
 
 
 def initialize(state):
-    bellPhi = qt.bell_state('10')
+    bellPhi = qt.bell_state('11')
     return qt.tensor(state, bellPhi)
 
 def evolute(state):
@@ -35,6 +35,11 @@ def evolute(state):
     
     qc.add_gate(sqrtX0)
     qc.add_gate(sqrtX0)
+    qc.add_gate(H0)
+    qc.add_gate(sqrtX0)
+    qc.add_gate(sqrtX0)
+    qc.add_gate(H0)
+    
     qc.add_gate(CNOT01)
     qc.add_gate(H0)
     
