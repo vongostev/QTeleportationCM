@@ -13,13 +13,13 @@ from numpy import pi
 from qutip.qip.circuit import QubitCircuit, Gate
 
 
-# ![image.png](attachment:image.png)
+# ![image-2.png](attachment:image-2.png)
 
 # In[2]:
 
 
 def initialize(state):
-    bellPhi = qt.bell_state('10')
+    bellPhi = qt.bell_state('00')
     return qt.tensor(state, bellPhi)
 
 def evolute(state):
@@ -33,8 +33,8 @@ def evolute(state):
 
     qc = QubitCircuit(N=3)
     
-    qc.add_gate(sqrtX0)
-    qc.add_gate(sqrtX0)
+#     qc.add_gate(sqrtX0)
+#     qc.add_gate(sqrtX0)
     qc.add_gate(CNOT01)
     qc.add_gate(H0)
     
@@ -76,7 +76,7 @@ def teleport(state, mres):
     return red_state
 
 
-# In[6]:
+# In[8]:
 
 
 if __name__ == "__main__":
