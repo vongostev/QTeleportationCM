@@ -13,9 +13,9 @@ from numpy import pi
 from qutip.qip.circuit import QubitCircuit, Gate
 
 
-# ![image-2.png](attachment:image-2.png)
+# ![image-3.png](attachment:image-3.png)
 
-# In[2]:
+# In[15]:
 
 
 def initialize(state):
@@ -38,10 +38,10 @@ def evolute(state):
     qc.add_gate(CNOT01)
     qc.add_gate(H0)
     
-    qc.add_gate(CNOT12)
-    qc.add_gate(H2)
-    qc.add_gate(CNOT02)
-    qc.add_gate(H2)
+#     qc.add_gate(CNOT12)
+#     qc.add_gate(H2)
+#     qc.add_gate(CNOT02)
+#     qc.add_gate(H2)
   
     gates_sequence = qc.propagators()
     scheme = oper.gate_sequence_product(gates_sequence)
@@ -61,11 +61,10 @@ def measure(state):
 twoQ_basis = {0: '00', 1: '01', 2: '10', 3: '11'}
 
 def teleport(state, mres):
-    state.ptrace([2])
+    q0, q1 = map(int, twoQ_basis[mres])
     
     s0_name = twoQ_basis[mres] + '0'
     s1_name = twoQ_basis[mres] + '1'
-    
     s0 = qt.bra(s0_name)
     s1 = qt.bra(s1_name)
     
@@ -73,10 +72,25 @@ def teleport(state, mres):
     b = (s1 * state).tr()
     red_state = (a*qt.ket([0], 2) + b*qt.ket([1], 2)).unit()
     
-    return red_state
+    H = Gate('SNOT', targets=0)
+    sqrtX = Gate('SQRTNOT', targets=0)
+    qc = QubitCircuit(N=1)
+    
+    if q1 == 1:
+        qc.add_gate(sqrtX)
+        qc.add_gate(sqrtX)
+    if q0 == 1:
+        qc.add_gate(H)
+        qc.add_gate(sqrtX)
+        qc.add_gate(sqrtX)
+        qc.add_gate(H)
+    gates_sequence = qc.propagators()
+    scheme = oper.gate_sequence_product(gates_sequence)
+    
+    return scheme * red_state
 
 
-# In[8]:
+# In[20]:
 
 
 if __name__ == "__main__":
@@ -95,6 +109,12 @@ if __name__ == "__main__":
         
 #     plt.hist(fidelity)
 #     plt.show()
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
